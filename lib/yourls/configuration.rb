@@ -25,7 +25,7 @@ module Yourls
     end
 
     def api_key
-      YOURLS_CONFIG.fetch(:api_key)
+      YOURLS_CONFIG.fetch(:api_key, nil)
     end
 
     def api_endpoint
