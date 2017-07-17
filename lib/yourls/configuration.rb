@@ -41,7 +41,7 @@ module Yourls
     end
 
     def password
-      YOURLS_CONFIG.fetch(:username, nil)
+      YOURLS_CONFIG.fetch(:password, nil)
     end
 
     def timeout
