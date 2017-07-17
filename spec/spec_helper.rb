@@ -1,8 +1,6 @@
 require 'pry'
 require 'rspec'
 require 'vcr'
-require 'yaml'
-require 'hash_symbolizer'
 
 ROOT = Pathname(File.expand_path(File.join(File.dirname(__FILE__), '..')))
 
@@ -15,8 +13,4 @@ VCR.configure do |config|
   config.cassette_library_dir = "spec/cassettes"
 end
 
-file = ROOT.join(*%w(spec fixtures yourls.yml))
-
-if File.exist?(file)
-  YOURLS_CONFIG = YAML.load_file(file).symbolize_keys
-end
+YOURLS_CONFIG = { domain: 'http://example.com', api_endpoint: 'http://example.com/yourls-api.php', api_key: '313378483' }

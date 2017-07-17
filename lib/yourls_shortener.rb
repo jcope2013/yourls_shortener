@@ -9,5 +9,5 @@ module Yourls
   require_relative 'yourls/expand'
   require_relative 'yourls/shorten'
 
-  require 'hash_symbolizer'
+  require 'active_support/core_ext/object/blank'
 end

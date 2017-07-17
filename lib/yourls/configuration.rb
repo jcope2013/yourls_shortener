@@ -6,7 +6,7 @@ module Yourls
     #   intelligently as they are present.
 
     def to_params
-      [].tap do |fields|
+      {}.tap do |fields|
         YOURLS_CONFIG.each do |name, contents|
           fields[translate(name.to_sym)] = contents
         end
