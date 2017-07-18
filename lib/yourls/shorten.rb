@@ -4,7 +4,7 @@ module Yourls
     extend self
 
     def url(url)
-      return url if already_shortened?(url) || no_auth_configured?
+      return url if no_auth_configured? || already_shortened?(url)
 
       shorturl_from(shorturl_request(url))
     end
