@@ -2,17 +2,13 @@ module Yourls
   module Requestable
     require 'rest_client'
 
-    def already_shortened?
+    def already_shortened?(url)
       regex = Regexp.new(domain)
-      @url =~ regex
+      url =~ regex
     end
 
     def base_params
-      {
-        format:       'json',
-        timeout:      20,
-        open_timeout: 20
-      }.merge(authentication)
+      { format: 'json' }.merge(authentication)
     end
 
     def authentication
@@ -26,12 +22,8 @@ module Yourls
       end
     end
 
-    def timeout_hash
-      { timeout: config.timeout } if config.timeout
-    end
-
-    def timeout_hash
-      { open_timeout: config.open_timeout } if config.open_timeout
+    def no_auth_configured?
+      config.api_key.blank? && config.username.blank? && config.password.blank?
     end
 
     def format
@@ -43,7 +35,7 @@ module Yourls
     end
 
     def host
-      config.api_endpoint || config.host
+      config.api_endpoint
     end
 
     def domain

@@ -4,22 +4,20 @@ module Yourls
     extend self
 
     def url(url)
-      @url = url
-
-      return url unless already_shortened?
-      longurl_from(expand_request)
+      return url unless already_shortened?(url)
+      longurl_from(expand_request(url))
     end
 
     private
 
-    def expand_request
-      RestClient.get(host, params: expand_params)
+    def expand_request(url)
+      RestClient.get(host, params: expand_params(url))
     end
 
-    def expand_params
+    def expand_params(url)
       base_params.merge({
         action:       'expand',
-        shorturl:     @url
+        shorturl:     url
       })
     end
 

@@ -4,21 +4,19 @@ module Yourls
     extend self
 
     def url(url)
-      @url = url
-
-      clicks_from(url_stats_request)
+      clicks_from(url_stats_request(url))
     end
 
     private
 
-    def url_stats_request
-      RestClient.get(host, params: url_stats_params)
+    def url_stats_request(url)
+      RestClient.get(host, params: url_stats_params(url))
     end
 
-    def url_stats_params
+    def url_stats_params(url)
       base_params.merge({
         action:       'url-stats',
-        shorturl:     @url
+        shorturl:     url
       })
     end
 

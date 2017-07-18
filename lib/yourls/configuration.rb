@@ -20,16 +20,12 @@ module Yourls
       dictionary.fetch(name, name)
     end
 
-    def field(field, params_key)
-      YOURLS_CONFIG.fetch(key, nil)
-    end
-
     def api_key
       YOURLS_CONFIG.fetch(:api_key, nil)
     end
 
     def api_endpoint
-      YOURLS_CONFIG.fetch(:api_endpoint, Yourls::NotConfiguredError)
+      YOURLS_CONFIG.fetch(:api_endpoint, nil)
     end
 
     def domain
@@ -45,15 +41,13 @@ module Yourls
     end
 
     def timeout
-      YOURLS_CONFIG.fetch(:timeout, nil)
+      YOURLS_CONFIG.fetch(:timeout, 20)
     end
 
     def open_timeout
-      YOURLS_CONFIG.fetch(:open_timeout, nil)
+      YOURLS_CONFIG.fetch(:open_timeout, 20)
     end
 
-    # NOTE: (dysnomian) It's JSON. If you want something else, implement it
-    #  yourself.
     def format
       'json'
     end
@@ -61,7 +55,7 @@ module Yourls
     private
 
     def domain_from_endpoint
-      return Yourls::NotConfiguredError unless api_endpoint
+      return nil unless api_endpoint
       URI.parse(api_endpoint).host
     end
   end

@@ -4,19 +4,20 @@ module Yourls
     extend self
 
     def url(url)
-      @url = url
-      return url if already_shortened?
+      return url if already_shortened?(url) || no_auth_configured?
 
-      shorturl_from(shorturl_request)
+      shorturl_from(shorturl_request(url))
     end
 
-    def shorturl_request
-      RestClient.get(host, params: shorturl_params)
+    private
+
+    def shorturl_request(url)
+      RestClient.get(host, params: shorturl_params(url))
     end
 
-    def shorturl_params
+    def shorturl_params(url)
       base_params.merge({
-        url:          @url,
+        url:          url,
         action:       'shorturl',
         format:       'json'
       })
