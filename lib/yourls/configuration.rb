@@ -25,6 +25,11 @@ module Yourls
     end
 
     def api_endpoint
+      redis = YOURLS_CONFIG.fetch(:redis, nil)
+      if redis
+        api_endpoint = redis.get("YOURLS_ENDPOINT_OVERRIDE")
+        return api_endpoint unless api_endpoint.nil?
+      end
       YOURLS_CONFIG.fetch(:api_endpoint, nil)
     end
 
